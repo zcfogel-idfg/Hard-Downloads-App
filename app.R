@@ -5,7 +5,6 @@
 ## load necessary packages
 source('K:/Wildlife/Shiny_Apps/ZCF/Hard-Downloads-App/code/Collar_Shiny_Packages.R')
 
-
 source('K:/Wildlife/Shiny_Apps/ZCF/Hard-Downloads-App/code/Rename_Files.R')
 
 ####_______________________________________________________________
@@ -22,8 +21,8 @@ vitrows <- grepl('SEP|VIT|PRX|MORT', to.process$file.ext)
 
 # remove .tag and .gdf files
 weird <- to.process$ext == 'gdf'|to.process$ext == 'GDF'|to.process$ext == 'kml'|
-  to.process$ext == 'tag'|to.process$ext == 'tdf'|to.process$ext == 'KML'|
-  to.process$ext == 'TAG'|to.process$ext == 'TDF'
+         to.process$ext == 'tag'|to.process$ext == 'tdf'|to.process$ext == 'KML'|
+         to.process$ext == 'TAG'|to.process$ext == 'TDF'
 
 # isolate CBC files
 cbc <- grepl('CBC', to.process$path)
@@ -33,21 +32,21 @@ unk <- grepl('UK|Unk', to.process$file.ext)
 
 ## assign 'process' or 'unnecessary' to table
 to.process[!vitrows & !weird & !cbc & !unk,]$Type <- 'Process'
-to.process[vitrows | weird | cbc | unk,]$Type <- 'Unnecessary'
+to.process[vitrows | weird | cbc | unk,]$Type     <- 'Unnecessary'
 
 to.process <- to.process %>% 
-  select('newfile.ext', 'new.path', 'ext', 'Type') %>% 
-  rename(`File Name` = newfile.ext,
-         `File Path` = new.path,
-         Ext = ext,
-         `Should process?` = Type
-         )
+              select('newfile.ext', 'new.path', 'ext', 'Type') %>% 
+              rename(`File Name` = newfile.ext,
+                     `File Path` = new.path,
+                     Ext = ext,
+                     `Should process?` = Type
+                     )
 
 to.correct <- to.correct %>% 
-  select('file.ext', 'path') %>%
-  rename(`File Name` = file.ext,
-         `File Path` = path
-         )
+              select('file.ext', 'path') %>%
+              rename(`File Name` = file.ext,
+                     `File Path` = path
+                     )
 
 
 ####________________________________________________________________
