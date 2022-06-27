@@ -13,5 +13,7 @@ if(!require('shinybusy')) install.packages('shinybusy')
 library(shinybusy)
 if(!require('shinyBS')) install.packages('shinyBS')
 library(shinyBS)
+if(!require('geosphere')) install.packages('geosphere') #**change**
+library(geosphere)
 # install.packages("remotes")
 # remotes::install_github("daattali/shinycssloaders")

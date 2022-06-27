@@ -35,6 +35,8 @@ library(readxl)
 if(!require(terra)) install.packages('terra')
 library(terra)
 
+if(!require(plotly)) install.packages('plotly')
+library(plotly)
 
 
 

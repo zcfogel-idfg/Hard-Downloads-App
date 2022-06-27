@@ -5,15 +5,19 @@
 ####-------------------------------------
 #### List of Existing Hard Downloads
 
-setwd("K:/Wildlife/Shiny_Apps/ZCF/Hard-Downloads-App/code")
-source('Collar_Packages.R')
+# setwd("K:/Wildlife/Shiny_Apps/ZCF/Hard-Downloads-App/code")
+# source('Collar_Packages.R')
+# # run script to access server
+# source("Server_Access.R")
+
+source('code/Collar_Packages.R') # **change** - code has to be written so it can be run out of this folder anywhere
 # run script to access server
-source("Server_Access.R")
+source("code/Server_Access.R")
 
 # create table of animal_ID and collar serial no
 #   con is from Server_Access.R
  records <- dbGetQuery(con, 'SELECT Animal_ID, Collar_Serial_No
-                       FROM Collars_Hard_Downloads2')
+                       FROM Collars_Hard_Downloads3')
 
 #records <- combined
 
@@ -34,18 +38,22 @@ downloaded_df <- data.frame(1:length(downloaded), downloaded)
 ##    -> these are files that have been downloaded from collar but may not be processed/imported onto server
 ##    -> recursive argument extracts all files in subfolders
 ##    -> some of these may have already been imported
-x <- list.files(path = "K:/Wildlife/Collars/Downloaded Collar Files", 
+# x <- list.files(path = "K:/Wildlife/Collars/Downloaded Collar Files", 
+#                 recursive = T)
+x <- list.files(path = "/media/kdrive/Wildlife/Collars/Downloaded Collar Files", 
                 recursive = T)
-
 
 ####--------------------------------------------------
 #### Set up data frame for downloaded collar files
 
 ## dataframe with file paths, filenames with extension, and filenames without ext
 ## need to add beginning of path on 
-xx <- data.frame(path = paste0('K:/Wildlife/Collars/Downloaded Collar Files/', x),     # eg K:/Wildlife/Collars/Downloaded Collar Files/2020/R1/69099_ET12345
+# xx <- data.frame(path = paste0('K:/Wildlife/Collars/Downloaded Collar Files/', x),     # eg K:/Wildlife/Collars/Downloaded Collar Files/2020/R1/69099_ET12345
+#                  # basename extracts filename at end of path
+#                  file.ext = basename(x))     # eg 69099_ET12345.txt
+xx <- data.frame(path = paste0('/media/kdrive/Wildlife/Collars/Downloaded Collar Files/', x),     # eg K:/Wildlife/Collars/Downloaded Collar Files/2020/R1/69099_ET12345
                  # basename extracts filename at end of path
-                 file.ext = basename(x))     # eg 69099_ET12345.txt
+                 file.ext = basename(x))     # eg 69099_ET12345.txt **change** - this is the path for the server
 ## file_path_sans_ext removes extension
 xx$file <- tools::file_path_sans_ext(xx$file.ext)      # eg 69099_ET12345
 
@@ -153,7 +161,8 @@ processed <- xx[xx$processed == T,]
 # write.csv(file = "processed.csv", processed)
 
 # copy irregular files to separate folder
-irreg <- 'K:/Wildlife/Collars/Files to process/Incorrect formats DONT ADD FILES TO THIS'
+# irreg <- 'K:/Wildlife/Collars/Files to process/Incorrect formats DONT ADD FILES TO THIS'
+irreg <- '/media/kdrive/Wildlife/Collars/Files to process/Incorrect formats DONT ADD FILES TO THIS' #**change** - this is the path for the server
 
 # remove existing files
 #unlink('K:/Wildlife/Collars/Files to process/Incorrect formats DONT ADD FILES TO THIS/*')
